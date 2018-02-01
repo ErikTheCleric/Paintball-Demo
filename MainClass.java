@@ -2,28 +2,29 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 // circle making project
 
 public class MainClass extends JFrame {
 
-	public static void main(String[] args) {
-		JFrame gameWindow = new JFrame("PAINTBALL");
-		drawingPanel window = new drawingPanel();
+	JPanel contentPane = new JPanel();
+	
+	public MainClass(DrawingPanel window) {
+		this.setTitle("PAINTBALL");
+		this.setResizable(true);
+		this.setSize(DrawingPanel.defDim);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		//window.setFocusable(true);
-		gameWindow.setResizable(true);
-		gameWindow.setSize(1000, 700);
-		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameWindow.setBackground(Color.GRAY);
-		gameWindow.add(window);
-		gameWindow.pack();
-		gameWindow.setVisible(true);
-		
+		contentPane.add(window);
+		this.setContentPane(contentPane);
+		this.setVisible(true);
 		window.start();
-		
-		
-		
+	}
+	
+	public static void main(String[] args) {
+		DrawingPanel win = new DrawingPanel();
+		new MainClass(win);
 	}
 
 }

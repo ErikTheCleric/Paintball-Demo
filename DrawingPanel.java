@@ -3,24 +3,34 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class drawingPanel extends Canvas implements Runnable{
+public class DrawingPanel extends Canvas implements Runnable{
 	
-	player p1 = new player(1, Color.RED, 100, 100, 10);
+	public player p1 = new player(movementOptions.WASD, Color.RED, 100, 100, 10);
+	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 200, 200, 10);
 	public static int FPStrace = 20;
-	private Thread thread;
-	private boolean running = true; // should be false
 	
-	public drawingPanel() {
-		this.setPreferredSize(new Dimension(1000,600));
-		this.addKeyListener(p1);
+	public static Dimension defDim = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
+	private Thread thread;
+	private boolean running = false; // should be false
+	
+	private Handler defHandler;
+	
+	public DrawingPanel() {
+		this.setPreferredSize(defDim);
+		defHandler = new Handler();
+		this.addKeyListener(defHandler);
+		
+		defHandler.add(p1);
+		defHandler.add(p2);
 	}
 	
-	public void render() {
+	public void paint() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
 			this.createBufferStrategy(3);
@@ -29,8 +39,8 @@ public class drawingPanel extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D)g;
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, 1000, 700);
-		p1.draw(g2d);
+		g.fillRect(0, 0, defDim.width, defDim.height);
+		p1.paint(g2d);
 		g.dispose();
 		bs.show();
 	}
@@ -50,7 +60,7 @@ public class drawingPanel extends Canvas implements Runnable{
 		}
 	}
 	
-	public void tick() {}
+	public void update() {}
 	
 	@Override
 	public void run() {
@@ -66,11 +76,11 @@ public class drawingPanel extends Canvas implements Runnable{
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while(delta >= 1) {
-				tick();
+				update();
 				delta--;
 			}
 			if(running) {
-				this.repaint();
+				this.paint();
 			}
 			frames++;
 			if(System.currentTimeMillis() - timer > 1000) {
