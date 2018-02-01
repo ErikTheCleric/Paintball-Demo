@@ -34,23 +34,23 @@ public class Handler extends KeyAdapter{
 		super.keyPressed(e);
 		int code = e.getKeyCode();
 		if(code == KeyEvent.VK_W) {
-			System.out.println("W");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.WASD) {
-					i.changeVelY(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_S) {
-			System.out.println("S");
+			//System.out.println("W");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.WASD) {
 					i.changeVelY(false);
 				}
 			}
 		}
+		if(code == KeyEvent.VK_S) {
+			//System.out.println("S");
+			for(player i : players) {
+				if(i.getMovement() == movementOptions.WASD) {
+					i.changeVelY(true);
+				}
+			}
+		}
 		if(code == KeyEvent.VK_D) {
-			System.out.println("D");
+			//System.out.println("D");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.WASD) {
 					i.changeVelX(true);
@@ -58,7 +58,7 @@ public class Handler extends KeyAdapter{
 			}
 		}
 		if(code == KeyEvent.VK_A) {
-			System.out.println("A");
+			//System.out.println("A");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.WASD) {
 					i.changeVelX(false);
@@ -66,23 +66,23 @@ public class Handler extends KeyAdapter{
 			}
 		}
 		if(code == KeyEvent.VK_UP) {
-			System.out.println("UP");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.ARROWS) {
-					i.changeVelY(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_DOWN) {
-			System.out.println("DOWN");
+			//System.out.println("UP");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.ARROWS) {
 					i.changeVelY(false);
 				}
 			}
 		}
+		if(code == KeyEvent.VK_DOWN) {
+			//System.out.println("DOWN");
+			for(player i : players) {
+				if(i.getMovement() == movementOptions.ARROWS) {
+					i.changeVelY(true);
+				}
+			}
+		}
 		if(code == KeyEvent.VK_RIGHT) {
-			System.out.println("RIGHT");
+			//System.out.println("RIGHT");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.ARROWS) {
 					i.changeVelX(true);
@@ -90,11 +90,29 @@ public class Handler extends KeyAdapter{
 			}
 		}
 		if(code == KeyEvent.VK_LEFT) {
-			System.out.println("LEFT");
+			//System.out.println("LEFT");
 			for(player i : players) {
 				if(i.getMovement() == movementOptions.ARROWS) {
 					i.changeVelX(false);
 				}
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		for(player i : players) {
+			while(i.getVelX() < 0) {
+				i.changeVelX(true);
+			}
+			while(i.getVelX() > 0) {
+				i.changeVelX(false);
+			}
+			while(i.getVelY() < 0) {
+				i.changeVelY(true);
+			}
+			while(i.getVelY() > 0) {
+				i.changeVelY(false);
 			}
 		}
 	}

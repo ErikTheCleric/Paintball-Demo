@@ -11,13 +11,13 @@ import javax.swing.JPanel;
 
 public class DrawingPanel extends Canvas implements Runnable{
 	
-	public player p1 = new player(movementOptions.WASD, Color.RED, 100, 100, 10);
-	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 200, 200, 10);
+	public player p1 = new player(movementOptions.WASD, Color.RED, defDim.width / 4, defDim.height / 2, 10);
+	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 3 * defDim.width / 4, defDim.height / 2, 10);
 	public static int FPStrace = 20;
 	
 	public static Dimension defDim = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
 	private Thread thread;
-	private boolean running = false; // should be false
+	private boolean running = false;
 	
 	private Handler defHandler;
 	
@@ -37,12 +37,16 @@ public class DrawingPanel extends Canvas implements Runnable{
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		Graphics2D g2d = (Graphics2D)g;
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, defDim.width, defDim.height);
-		p1.paint(g2d);
+		defHandler.paint(g);
 		g.dispose();
 		bs.show();
+	}
+	
+
+	public void update() {
+		defHandler.update();
 	}
 
 	public synchronized void start() {
@@ -59,8 +63,6 @@ public class DrawingPanel extends Canvas implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
-	public void update() {}
 	
 	@Override
 	public void run() {
