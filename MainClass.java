@@ -10,12 +10,17 @@ public class MainClass extends JFrame {
 	public static void main(String[] args) {
 		JFrame gameWindow = new JFrame("PAINTBALL");
 		drawingPanel window = new drawingPanel();
-		gameWindow.setContentPane(window);
-		window.setFocusable(true);
-		gameWindow.setVisible(true);
+		
+		//window.setFocusable(true);
+		gameWindow.setResizable(true);
 		gameWindow.setSize(1000, 700);
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameWindow.setBackground(Color.GRAY);
+		gameWindow.add(window);
+		gameWindow.pack();
+		gameWindow.setVisible(true);
+		
+		window.start();
 		
 		
 		
