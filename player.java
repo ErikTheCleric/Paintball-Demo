@@ -5,6 +5,7 @@ public class player {
 	private int moveSetOptions = 0; // decides how the player will move (w,a,s,d or <-,->,^, etc
 	Color color = Color.BLACK;
 	private int x,y, radius;
+	public enum movementOptions{WASD, ArrowKeys}
 	
 	public player(int moveSetOptions, Color startingColor, int x, int y, int radius) {
 		this.moveSetOptions = moveSetOptions;
