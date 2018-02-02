@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
+import javafx.scene.shape.Circle;
+
 public class player {
 	private movementOptions moveSetOptions = movementOptions.DEFAULT; // decides how the player will move (w,a,s,d or <-,->,^, etc
 	Color color = Color.RED;
@@ -54,6 +56,10 @@ public class player {
 		g.fillOval(x, y, radius, radius);
 	}
 	
+	public Circle mesh() {
+		return new Circle(x, y, radius);
+	}
+	
 	public void update() {
 		x += velX;
 		y += velY;
@@ -61,5 +67,20 @@ public class player {
 
 	public movementOptions getMovement() {
 		return moveSetOptions;
+	}
+
+	public boolean overlap(player sec) {
+		Circle P1 = this.mesh();
+		Circle P2 = sec.mesh();
+		
+		double d = Math.pow(P1.getCenterX() - P2.getCenterX(), 2) + Math.pow(P1.getCenterY() - P2.getCenterY(), 2);
+		d = Math.sqrt(d);
+		
+		if(Math.sqrt(P1.getRadius() - P2.getRadius()) <= d && Math.sqrt(P1.getRadius() + P2.getRadius()) >= d) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,6 +19,17 @@ public class Handler extends KeyAdapter{
 	public void update() {
 		for(player i : players) {
 			i.update();
+		}
+		for(int i = 0; i < players.size(); i++) {
+			for(int j = 0; j < players.size(); j++) {
+				if(i != j) {
+					if(players.get(i).overlap(players.get(j))) {
+						Color pre = players.get(i).color;
+						players.get(i).colorSet(players.get(j).color);
+						players.get(j).colorSet(pre);
+					}
+				}
+			}
 		}
 	}
 	
