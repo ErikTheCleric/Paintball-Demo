@@ -12,7 +12,7 @@ public class MainClass extends JFrame {
 	
 	public MainClass(DrawingPanel window) {
 		this.setTitle("PAINTBALL");
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setSize(DrawingPanel.defDim);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		

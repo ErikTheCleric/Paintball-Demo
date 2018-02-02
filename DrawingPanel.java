@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 
 public class DrawingPanel extends Canvas implements Runnable{
 	
-	public player p1 = new player(movementOptions.WASD, Color.RED, defDim.width / 4, defDim.height / 2, 10);
-	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 3 * defDim.width / 4, defDim.height / 2, 10);
+	public player p1 = new player(movementOptions.WASD, Color.RED, defDim.width / 4, defDim.height / 2, 250);
+	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 3 * defDim.width / 4, defDim.height / 2, 250);
 	public static int FPStrace = 20;
 	
 	public static Dimension defDim = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();

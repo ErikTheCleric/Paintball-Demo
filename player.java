@@ -9,9 +9,9 @@ import javafx.scene.shape.Circle;
 
 public class player {
 	private movementOptions moveSetOptions = movementOptions.DEFAULT; // decides how the player will move (w,a,s,d or <-,->,^, etc
-	Color color = Color.RED;
+	private Color color;
 	private int x, y, radius, velX, velY;
-	private int maxX = 3, maxY = 3;
+	public static int max = 3;
 	
 	public player(movementOptions i, Color startingColor, int x, int y, int radius) {
 		this.moveSetOptions = i;
@@ -20,27 +20,20 @@ public class player {
 		this.y = y;
 		this.radius = radius;
 	}
+
 	
-	public void changeVelX(boolean inc) {
-		if(inc && velX + 1 <= maxX) {
-			velX++;
-		}
-		if(!inc && velX - 1 >= maxX * -1){
-			velX--;
-		}
+	public void setVelX(int x) {
+		velX = x;
 	}
 	
 	public int getVelX() {
 		return velX;
 	}
 	
-	public void changeVelY(boolean inc) {
-		if(inc && velX + 1 <= maxY) {
-			velY++;
-		}
-		if(!inc && velY - 1 >= maxY * -1){
-			velY--;
-		}
+	public void setVelY(int y) {
+		velY = y; /// Erik was here :)
+		//I will keep it, because you're a good friend...
+		//Courtesy of Deep...
 	}
 	
 	public int getVelY() {
@@ -49,6 +42,10 @@ public class player {
 	
 	public void colorSet(Color colorSetTo) {
 		color = colorSetTo;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 	
 	public void paint(Graphics g) {
@@ -73,14 +70,21 @@ public class player {
 		Circle P1 = this.mesh();
 		Circle P2 = sec.mesh();
 		
-		double d = Math.pow(P1.getCenterX() - P2.getCenterX(), 2) + Math.pow(P1.getCenterY() - P2.getCenterY(), 2);
-		d = Math.sqrt(d);
+		double d = Math.hypot(P2.getCenterX() - P1.getCenterX(), P2.getCenterY() - P2.getCenterY());
 		
-		if(Math.sqrt(P1.getRadius() - P2.getRadius()) <= d && Math.sqrt(P1.getRadius() + P2.getRadius()) >= d) {
-			return true;
-		}
-		else {
+		if(d <= P2.getRadius() + P1.getRadius()) {
 			return false;
 		}
+		else {
+			return true;
+		}
+	}
+	
+	public boolean intersect(player sec) {
+		double distanceX = (this.mesh().getCenterX() - this.mesh().getRadius()) - (sec.mesh().getCenterX() + sec.mesh().getRadius());
+		double distanceY = (this.mesh().getCenterY() - this.mesh().getRadius()) - (sec.mesh().getCenterY() + sec.mesh().getRadius());
+		double radiusSum = this.mesh().getRadius() + sec.mesh().getRadius();
+		System.out.println(distanceX + "\n" + distanceY + "\n" + radiusSum);
+		return distanceX * distanceX + distanceY * distanceY <= radiusSum * radiusSum;
 	}
 }

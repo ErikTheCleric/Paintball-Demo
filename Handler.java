@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Handler extends KeyAdapter{
 	public ArrayList <player> players;
+	
 	public Handler() {
 		players = new ArrayList<player>();
 	}
@@ -20,13 +21,19 @@ public class Handler extends KeyAdapter{
 		for(player i : players) {
 			i.update();
 		}
-		for(int i = 0; i < players.size(); i++) {
-			for(int j = 0; j < players.size(); j++) {
+		for(int i = 0; i < players.size() / 2; i++) {
+			for(int j = (players.size() / 2) - 1; j < players.size(); j++) {
 				if(i != j) {
-					if(players.get(i).overlap(players.get(j))) {
-						Color pre = players.get(i).color;
-						players.get(i).colorSet(players.get(j).color);
+					if(players.get(i).intersect(players.get(j))) {
+						System.out.println("intersecting");
+						Color pre = players.get(i).getColor();
+						players.get(i).colorSet(players.get(j).getColor());
 						players.get(j).colorSet(pre);
+						
+						players.get(i).setVelX(0);
+						players.get(i).setVelX(0);
+						players.get(j).setVelY(0);
+						players.get(j).setVelY(0);	
 					}
 				}
 			}
@@ -45,87 +52,55 @@ public class Handler extends KeyAdapter{
 	public void keyPressed(KeyEvent e) {
 		super.keyPressed(e);
 		int code = e.getKeyCode();
-		if(code == KeyEvent.VK_W) {
-			//System.out.println("W");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.WASD) {
-					i.changeVelY(false);
+		for(player i : players) {
+			if(i.getMovement() == movementOptions.WASD) {
+				if(code == KeyEvent.VK_W) {
+					//System.out.println("W");
+					i.setVelY(player.max * -1);
+				}
+				if(code == KeyEvent.VK_S) {
+					//System.out.println("S");
+					i.setVelY(player.max);
+				}
+				if(code == KeyEvent.VK_D) {
+					//System.out.println("D");
+					i.setVelX(player.max);
+				}
+				if(code == KeyEvent.VK_A) {
+					//System.out.println("A");
+					i.setVelX(player.max * -1);
+				}
+			}
+			if(i.getMovement() == movementOptions.ARROWS) {
+				if(code == KeyEvent.VK_UP) {
+					//System.out.println("UP");
+					i.setVelY(player.max * -1);
+				}
+				if(code == KeyEvent.VK_DOWN) {
+					//System.out.println("DOWN");
+					i.setVelY(player.max);
+				}
+				if(code == KeyEvent.VK_RIGHT) {
+					//System.out.println("RIGHT");
+					i.setVelX(player.max);
+				}
+				if(code == KeyEvent.VK_LEFT) {
+					//System.out.println("LEFT");
+					i.setVelX(player.max * -1);
 				}
 			}
 		}
-		if(code == KeyEvent.VK_S) {
-			//System.out.println("S");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.WASD) {
-					i.changeVelY(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_D) {
-			//System.out.println("D");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.WASD) {
-					i.changeVelX(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_A) {
-			//System.out.println("A");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.WASD) {
-					i.changeVelX(false);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_UP) {
-			//System.out.println("UP");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.ARROWS) {
-					i.changeVelY(false);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_DOWN) {
-			//System.out.println("DOWN");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.ARROWS) {
-					i.changeVelY(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_RIGHT) {
-			//System.out.println("RIGHT");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.ARROWS) {
-					i.changeVelX(true);
-				}
-			}
-		}
-		if(code == KeyEvent.VK_LEFT) {
-			//System.out.println("LEFT");
-			for(player i : players) {
-				if(i.getMovement() == movementOptions.ARROWS) {
-					i.changeVelX(false);
-				}
-			}
-		}
+		
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		for(player i : players) {
-			while(i.getVelX() < 0) {
-				i.changeVelX(true);
-			}
-			while(i.getVelX() > 0) {
-				i.changeVelX(false);
-			}
-			while(i.getVelY() < 0) {
-				i.changeVelY(true);
-			}
-			while(i.getVelY() > 0) {
-				i.changeVelY(false);
-			}
+			i.setVelX(0);
+			i.setVelX(0);
+			i.setVelY(0);
+			i.setVelY(0);
 		}
 	}
 }
