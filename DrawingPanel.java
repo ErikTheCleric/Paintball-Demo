@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 
 public class DrawingPanel extends Canvas implements Runnable{
 	
-	public player p1 = new player(movementOptions.WASD, Color.RED, defDim.width / 4, defDim.height / 2, 250);
-	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, 3 * defDim.width / 4, defDim.height / 2, 250);
+	private int playerSize = 150;
+	
+	public player p1 = new player(movementOptions.WASD, Color.RED, (defDim.width / 4) - (playerSize / 2), (defDim.height / 2) - (playerSize / 2), playerSize);
+	public player p2 = new player(movementOptions.ARROWS, Color.BLUE, (3 * defDim.width / 4) - (playerSize / 2), (defDim.height / 2) - (playerSize / 2), playerSize);
 	public static int FPStrace = 20;
 	
 	public static Dimension defDim = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
@@ -20,10 +22,12 @@ public class DrawingPanel extends Canvas implements Runnable{
 	private boolean running = false;
 	
 	private Handler defHandler;
+	private HUD hud;
 	
 	public DrawingPanel() {
 		this.setPreferredSize(defDim);
 		defHandler = new Handler();
+		hud = new HUD();
 		this.addKeyListener(defHandler);
 		
 		defHandler.add(p1);
@@ -37,16 +41,17 @@ public class DrawingPanel extends Canvas implements Runnable{
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.BLACK);
+		g.setColor(HUD.color);
 		g.fillRect(0, 0, defDim.width, defDim.height);
 		defHandler.paint(g);
+		hud.paint(g);
 		g.dispose();
 		bs.show();
 	}
-	
 
 	public void update() {
 		defHandler.update();
+		hud.update();
 	}
 
 	public synchronized void start() {
@@ -88,6 +93,11 @@ public class DrawingPanel extends Canvas implements Runnable{
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS: " + frames);
+				
+				///Take out soon
+				System.out.print("Touching: ");
+				System.out.println(p1.circlesTouching(p1.getX(), p1.getY(), 250 / 2, p2.getX(), p2.getY(), 250 / 2));
+				
 				frames = 0;
 			}
 			try {
