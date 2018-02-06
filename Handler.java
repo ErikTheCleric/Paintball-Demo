@@ -50,7 +50,7 @@ public class Handler extends KeyAdapter{
 		super.keyPressed(e);
 		int code = e.getKeyCode();
 		for(player i : Userplayers) {
-			if(i.getMovement() == movementOptions.WASD) {
+			if(i.getMovement() == movementOptions.WASD && HUD.color != Color.RED && HUD.color != Color.BLUE) {
 				if(code == KeyEvent.VK_W) {
 					//System.out.println("W");
 					i.setVelY(player.max * -1);
@@ -68,7 +68,7 @@ public class Handler extends KeyAdapter{
 					i.setVelX(player.max * -1);
 				}
 			}
-			if(i.getMovement() == movementOptions.ARROWS) {
+			if(i.getMovement() == movementOptions.ARROWS && HUD.color != Color.RED && HUD.color != Color.BLUE) {
 				if(code == KeyEvent.VK_UP) {
 					//System.out.println("UP");
 					i.setVelY(player.max * -1);
