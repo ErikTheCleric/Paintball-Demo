@@ -10,10 +10,10 @@ public class MainClass extends JFrame {
 
 	JPanel contentPane = new JPanel();
 	
-	public MainClass(drawingPanel window) {
+	public MainClass(DrawingPanel window) {
 		this.setTitle("PAINTBALL");
 		this.setResizable(false);
-		this.setSize(drawingPanel.defDim);
+		this.setSize(DrawingPanel.defDim);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		contentPane.add(window);
@@ -23,7 +23,7 @@ public class MainClass extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		drawingPanel win = new drawingPanel();
+		DrawingPanel win = new DrawingPanel();
 		new MainClass(win);
 	}
 
